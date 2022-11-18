@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ScanFaceView">
+        <!--圆环是否水平居中-->
+        <attr name="circle_centerHorizontal" format="boolean" />
+
+        <!--圆环是否垂直居中 -->
+        <attr name="circle_centerVertical" format="boolean" />
+
+        <!--圆环半径-->
+        <attr name="circle_radius" format="dimension" />
+
+        <!--圆环外围颜色-->
+        <attr name="inner_circle_color" format="color" />
+
+        <!--圆环与父布局上方距离-->
+        <attr name="circle_marginTop" format="dimension" />
+
+        <!--圆环与父布局左方距离-->
+        <attr name="circle_marginLeft" format="dimension" />
+
+        <!--圆环与父布局右方距离-->
+        <attr name="circle_marginRight" format="dimension" />
+
+        <!--圆环与父布局下方距离-->
+        <attr name="circle_marginBottom" format="dimension" />
+
+        <!--动画时长-->
+        <attr name="anim_duration" format="integer" />
+
+        <!--扫描的图片-->
+        <attr name="unit_scan_img" format="reference" />
+
+
+    </declare-styleable>
+
+</resources>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.ljm.scanfaceview.CustomTextureView
+            android:id="@+id/textureView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <com.ljm.scanfaceview.ScanFaceView
+            android:id="@+id/scanfaceView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:circle_centerHorizontal="true"
+            app:circle_marginTop="120dp"
+            app:circle_radius="140dp" />
+
+    </FrameLayout>
+</RelativeLayout>
