@@ -16,15 +16,6 @@
         <!--圆环与父布局上方距离-->
         <attr name="circle_marginTop" format="dimension" />
 
-        <!--圆环与父布局左方距离-->
-        <attr name="circle_marginLeft" format="dimension" />
-
-        <!--圆环与父布局右方距离-->
-        <attr name="circle_marginRight" format="dimension" />
-
-        <!--圆环与父布局下方距离-->
-        <attr name="circle_marginBottom" format="dimension" />
-
         <!--动画时长-->
         <attr name="anim_duration" format="integer" />
 

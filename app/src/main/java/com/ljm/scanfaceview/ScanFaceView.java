@@ -55,13 +55,9 @@ public class ScanFaceView extends View {
     private float mCircle_radius;
     private int mInner_circle_color;
     private float mCircle_marginTop;
-    private float mCircle_marginLeft;
-    private float mCircle_marginRight;
-    private float mCircle_marginBottom;
     private int mAnim_duration;
     private int mScan_img_resource_id;
     private FaceBox mFaceBox;
-    private Paint mTransparentPaint;
 
     public ScanFaceView(Context context) {
         this(context, null);
@@ -79,19 +75,13 @@ public class ScanFaceView extends View {
         mCircle_radius = typedArray.getDimension(R.styleable.ScanFaceView_circle_radius, DEFAULT_CIRCLE_RADIUS);
         mInner_circle_color = typedArray.getColor(R.styleable.ScanFaceView_inner_circle_color, Color.parseColor("#008ED6"));
         mCircle_marginTop = typedArray.getDimension(R.styleable.ScanFaceView_circle_marginTop, 0);
-        mCircle_marginLeft = typedArray.getDimension(R.styleable.ScanFaceView_circle_marginLeft, 0);
-        mCircle_marginRight = typedArray.getDimension(R.styleable.ScanFaceView_circle_marginRight, 0);
-        mCircle_marginBottom = typedArray.getDimension(R.styleable.ScanFaceView_circle_marginBottom, 0);
-        mAnim_duration = typedArray.getInteger(R.styleable.ScanFaceView_anim_duration, 1200);
+        mAnim_duration = typedArray.getInteger(R.styleable.ScanFaceView_anim_duration, 1500);
         mScan_img_resource_id = typedArray.getResourceId(R.styleable.ScanFaceView_unit_scan_img, R.mipmap.icon_scan_line);
         Log.i(TAG, "ScanFaceView: isHorizontal=" + mIsHorizontal
                 + "//isVertical=" + mIsVertical
                 + "//circle_radius=" + mCircle_radius
                 + "//inner_circle_color=" + mInner_circle_color
                 + "//circle_marginTop=" + mCircle_marginTop
-                + "//circle_marginLeft=" + mCircle_marginLeft
-                + "//circle_marginRight=" + mCircle_marginRight
-                + "//circle_marginBottom=" + mCircle_marginBottom
                 + "//anim_duration=" + mAnim_duration
                 + "//scan_img_resource_id=" + mScan_img_resource_id);
         init(context);
@@ -108,16 +98,6 @@ public class ScanFaceView extends View {
         initTextPaint();
         initCirclePaint();
         initRectPaint();
-        initTransparentPaint();
-    }
-
-    private ValueAnimator.AnimatorUpdateListener getUpdateListener() {
-        return animation -> {
-            float value = (float) animation.getAnimatedValue();
-            bitmapMatrix.setTranslate(circleCenterX - mCircle_radius, value);
-            bitmapMatrix.preScale(1.0f, -1.0f);
-            invalidate();
-        };
     }
 
     private void initRectPaint() {
@@ -147,16 +127,7 @@ public class ScanFaceView extends View {
         mBgPaint.setColor(Color.WHITE);
     }
 
-    private void initTransparentPaint() {
-        mTransparentPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mTransparentPaint.setStyle(Paint.Style.FILL);
-        mTransparentPaint.setColor(Color.TRANSPARENT);
-        mTransparentPaint.setAlpha(0);
-        mTransparentPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OUT));
-    }
-
     private void drawCircleMask(Canvas canvas) {
-        Log.i(TAG, "drawCircleMask");
         canvas.save();
         canvas.drawRect(new Rect(0, 0, mWidth, mHeight), mBgPaint);
         //设置混合模式
@@ -183,8 +154,6 @@ public class ScanFaceView extends View {
         mHeight = h;
         if (mIsHorizontal) {
             circleCenterX = mWidth / 2.0f;
-        } else {
-            circleCenterX = mCircle_marginLeft + mCircle_radius;
         }
         if (mIsVertical) {
             circleCenterY = mHeight / 2.0f;
@@ -200,7 +169,12 @@ public class ScanFaceView extends View {
         mValueAnimator.setDuration(mAnim_duration);
         mValueAnimator.setRepeatCount(-1);
         mValueAnimator.setRepeatMode(ValueAnimator.REVERSE);
-        mValueAnimator.addUpdateListener(getUpdateListener());
+        mValueAnimator.addUpdateListener(valueAnimator -> {
+            float value = (float) valueAnimator.getAnimatedValue();
+            bitmapMatrix.setTranslate(circleCenterX - mCircle_radius, value);
+            bitmapMatrix.preScale(1.0f, -1.0f);
+            invalidate();
+        });
         mValueAnimator.start();
     }
 
